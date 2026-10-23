@@ -102,6 +102,20 @@ npm run lint         # web-ext lint on dist/
 npm run probe        # re-run the site probe
 ```
 
+Dependency maintenance:
+
+- Commit `package-lock.json` after updating dependencies and use `npm ci` for
+  reproducible installs. The `monaco-editor` override keeps its DOMPurify
+  dependency on the patched 3.4.17 release or later until Monaco updates its
+  exact pin.
+- As of 2026-10-23, `npm audit` still reports
+  [CVE-2026-85393](https://github.com/advisories/GHSA-86w9-cpqp-85rv) in
+  `web-ext → @devicefarmer/adbkit → node-forge`. Upstream has no released fix.
+  The affected signature verification is used by adbkit's TCP/USB bridge;
+  web-ext does not call `createTcpUsbBridge`, and these development tools are
+  not bundled into the extension. Track the upstream fix rather than applying
+  the audit command's suggested downgrade to web-ext 5.
+
 ## Release / AMO
 
 Everything needed for an addons.mozilla.org submission lives in `store/`:

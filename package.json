@@ -1,6 +1,6 @@
 {
   "name": "monaco-vim-keys",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vim key bindings and relative line numbers for Monaco-based coding practice sites (LeetGPU, LeetCode, HackerRank, LintCode). Firefox extension powered by monaco-vim.",
   "license": "MIT",
   "author": "BANANASJIM",

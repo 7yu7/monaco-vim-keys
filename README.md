@@ -44,9 +44,13 @@ Verified = a headless runtime probe (`npm run probe`, evidence in
 
 **Signed xpi** (Mozilla-signed, self-distributed): download
 `monaco_vim_keys-0.1.0.1.xpi` from
-[Releases](https://github.com/BANANASJIM/monaco-vim-keys/releases) and open
+[release v0.1.0](https://github.com/BANANASJIM/monaco-vim-keys/releases/tag/v0.1.0) and open
 it with Firefox, or use `about:addons` → gear icon → *Install Add-on From
 File...*.
+
+The 0.1.1 GitHub release includes an unsigned build ZIP and source ZIP. To
+try that build before Mozilla signing, extract it and temporarily load its
+`manifest.json` through `about:debugging#/runtime/this-firefox`.
 
 **From source:**
 
@@ -126,6 +130,9 @@ screenshots. Packaging commands:
 npm run package          # xpi zip -> web-ext-artifacts/
 npm run package:source   # reproducible-build source zip for AMO -> web-ext-artifacts/
 ```
+
+Commit tracked release changes before running `package:source`; it archives
+only the source at `HEAD`, excluding local credentials and generated files.
 
 See `store/release-checklist.md` for the full runbook.
 

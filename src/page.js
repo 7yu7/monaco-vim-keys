@@ -27,6 +27,21 @@ const settings = {
 const managed = new WeakSet();
 const editorState = new Map(); // editor -> { vimMode, statusEl, disposeSub }
 
+// Ask ESM-bundled Monaco to expose window.monaco 
+(function exposeMonacoGlobal() {
+  let env = window.MonacoEnvironment;
+  try {
+    Object.defineProperty(window, 'MonacoEnvironment', {
+      configurable: true,
+      get() { return env; },
+      set(v) { env = { ...(v || {}), globalAPI: true }; },
+    });
+    env = { ...(env || {}), globalAPI: true };
+  } catch (e) {
+    /* page locked the property; nothing more we can do */
+  }
+})();
+
 function vimActive() {
   return settings.siteEnabled && settings.vimEnabled;
 }

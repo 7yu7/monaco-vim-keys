@@ -62,6 +62,17 @@ Web Development (AMO slug: `web-development`). Note: AMO has no
 None. AMO only allows its fixed allowlist of consumer-oriented tags
 (vim/monaco/etc. are rejected by the API), so the submission omits tags.
 
+## Version notes (0.1.1)
+
+- Update extension development and packaging dependencies with available security fixes.
+- Restrict source submission archives to the committed repository files, excluding
+  local credentials, Git worktree metadata, and generated artifacts.
+- Browser permissions, supported sites, and editor behavior are unchanged.
+
+The development-only `node-forge` dependency still has an upstream advisory
+(GHSA-86w9-cpqp-85rv) with no released fix. It is not bundled in the extension;
+see the development notes in README.md for the dependency-path assessment.
+
 ## Version notes (0.1.0)
 
 Initial release:

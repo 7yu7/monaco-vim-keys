@@ -1,5 +1,5 @@
-// Create the AMO source-code submission zip: the repo source needed to
-// reproduce the build, excluding generated/vendored directories.
+// Create the AMO source-code submission zip from a clean release commit.
+// Never include ignored credentials, Git worktree metadata, or local artifacts.
 // Output: web-ext-artifacts/monaco-vim-keys-<version>-source.zip
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
@@ -10,22 +10,14 @@ const out = `${outDir}/monaco-vim-keys-${version}-source.zip`;
 
 mkdirSync(outDir, { recursive: true });
 
-execFileSync(
-  'zip',
-  [
-    '-r',
-    out,
-    '.',
-    '-x',
-    'node_modules/*',
-    'dist/*',
-    'web-ext-artifacts/*',
-    '.git/*',
-    'test-results/*',
-    'playwright-report/*',
-    'tests/harness/shim.js',
-  ],
-  { stdio: 'inherit' }
-);
+try {
+  execFileSync('git', ['diff', '--quiet', 'HEAD', '--'], { stdio: 'inherit' });
+} catch {
+  throw new Error('Commit tracked changes before packaging the release source.');
+}
+
+execFileSync('git', ['archive', '--format=zip', `--output=${out}`, 'HEAD'], {
+  stdio: 'inherit',
+});
 
 console.log(`source submission zip: ${out}`);

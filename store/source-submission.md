@@ -45,6 +45,8 @@ The resulting zip is byte-equivalent in content to the submitted xpi
 npm run package:source   # -> web-ext-artifacts/monaco-vim-keys-<version>-source.zip
 ```
 
-Contains the full repository source excluding `node_modules/`, `dist/`,
-`web-ext-artifacts/`, `.git/`, and test artifacts — everything needed for
-the steps above.
+Run this from a Git checkout after committing the release changes. It archives
+only the files tracked at `HEAD` and refuses uncommitted tracked changes, so the
+source matches a reviewable commit. Local credentials, Git metadata, generated
+artifacts, and other untracked files are excluded. The archive contains
+everything needed for the build steps above.

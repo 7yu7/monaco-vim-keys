@@ -16,6 +16,9 @@ All must be green before continuing.
 
 ## 2. Package
 
+Commit the release changes before creating the source archive; it contains only
+tracked files from `HEAD`.
+
 ```sh
 npm run package          # -> web-ext-artifacts/monaco_vim_keys-<version>.zip
 npm run package:source   # -> web-ext-artifacts/monaco-vim-keys-<version>-source.zip
@@ -60,6 +63,6 @@ see `store/source-submission.md`.
 
 ## 6. Version bumps
 
-- Bump `version` in `package.json` only (the manifest version is generated
-  from it by `build.mjs`).
+- Bump `version` in `package.json` and the root metadata in `package-lock.json`
+  (the manifest version is generated from `package.json` by `build.mjs`).
 - Repeat steps 1–4; update the version notes in `store/listing.md`.

@@ -109,6 +109,7 @@ function detach(editor) {
     }
   }
   st.disposeSub.dispose();
+  st.configSub.dispose();
   st.statusEl.remove();
   editorState.delete(editor);
   managed.delete(editor);
@@ -120,7 +121,13 @@ function attach(editor) {
 
   const statusEl = createStatusElement(editor);
   const disposeSub = editor.onDidDispose(() => detach(editor));
-  editorState.set(editor, { vimMode: null, statusEl, disposeSub });
+  const configSub = editor.onDidChangeConfiguration((e) => {
+    if (!settings.relativeLineNumbers) return;
+    const LineNums = window.monaco.editor.EditorOption.lineNumbers;
+    if (!e.hasChanged(LineNums)) return;
+    if (editor.getOption(LineNums).renderType !== 2) applyLineNumbers(editor);
+  });
+  editorState.set(editor, { vimMode: null, statusEl, disposeSub, configSub });
 
   if (vimActive()) enableVim(editor);
   applyLineNumbers(editor);
